@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" class="fileUpload"/>
+</body>
+<script>
+class CountLoad {
+    constructor() {
+        this.init()
+    }
+    init() {
+        this.fileUpload = document.querySelector(".fileUpload")
+        console.log(this.fileUpload)
+        // this.params = params
+        // this.reader = new FileReader()
+        // this.download = downLoad
+    }
+    ajax(options) {
+        return new Promise((resolve,reject) => {
+            const { method , url , data } = options
+            var xhr = new XMLHttpRequest()
+            if(method.toUpperCase() === "GET") {
+                xhr.open(method,params(url,data),true)
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState === 4) {
+                        if(xhr.status === 200 && xhr.status === 304) {
+                            resolve(xhr.responseText)
+                        }
+                    }else{
+                        resolve(xhr.responseText)                        
+                    }
+                }
+                xhr.send()
+            }else if(method.toLowerCase() === "POST") {
+                xhr.open(method,url,true)
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState === 4) {
+                        if(xhr.status === 200 && xhr.status === 304) {
+                            resolve(xhr.responseText)
+                        }
+                    }else{
+                        resolve(xhr.responseText)                        
+                    }
+                }
+                xhr.setRequestHeader("Content-type","multipart/form-data")
+                xhr.send(data)
+            }
+        }) 
+    }
+    params(url,data){
+        url += "?"
+        Object.entries(data).map(item => {
+            url += item[0] + "=" + item[1] + "&"
+        })
+        return url.substring(0,url.length - 1)
+    }
+    download() {
+        const file = this.fileUpload.files[0]
+        this.reader.addEventListener("load",() => {
+            console.log(file.result)
+        })
+        if(file) {
+            reader.readAsDataURL(file);
+        }
+    }
+    domAdd() {
+        console.log(this.fileUpload)
+        this.fileUpload.addEventListener("change",() => {
+            this.download()
+        })
+    }
+}
+
+var downLoad = new CountLoad()
+
+downLoad.domAdd()
+
+</script>
+</html>
